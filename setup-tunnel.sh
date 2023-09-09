@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Getting instance id"
-instance_id=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=${INSTANCE_NAME}" --region ${AWS_DEFAULT_REGION} | jq -r '.Reservations[0].Instances[0].InstanceId')
+instance_id=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=${instance_name}" --region ${AWS_DEFAULT_REGION} | jq -r '.Reservations[] | select(.Instances[0].State.Name =="running").Instances[0].InstanceId')
 
 echo "Instance id is: ${instance_id}"
 
